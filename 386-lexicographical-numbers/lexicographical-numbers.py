@@ -18,8 +18,6 @@ class Solution:
             if node.terminal and curr_number:
                 res.append(int(curr_number))
 
-            
-
             for i in range(10):
                 if node.children[i] != 0:
                     dfs(node.children[i], curr_number)
@@ -28,10 +26,10 @@ class Solution:
         return res
 
 
-    def buildTrie(self, n):
+    def buildTrie(self, size):
         self.root = TrieNode(-1)
 
-        nums = [str(i) for i in range(1, n+1)]
+        nums = [str(i) for i in range(1, size+1)]
 
         # Iterate over each num and insert it into the Trie
         for num in nums:
