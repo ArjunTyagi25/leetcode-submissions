@@ -10,12 +10,9 @@ class Solution:
         res = [0] * len(heights)
 
         for i in range(len(heights)):
-            if stack == []:
-                stack.append([heights[i], i])
-            else:
+            if stack != []:
                 if stack[-1][0] > heights[i]:
                     res[stack[-1][1]] += 1
-                    stack.append([heights[i], i])
                 else:
                     while stack and stack[-1][0] < heights[i]:
                         res[stack[-1][1]] += 1
@@ -23,7 +20,7 @@ class Solution:
 
                     if stack:
                         res[stack[-1][1]] += 1
-                    stack.append([heights[i], i])
+            stack.append([heights[i], i])
         
         return res
 
