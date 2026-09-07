@@ -15,15 +15,14 @@ class Solution:
             if not node:
                 return
 
-            if not node.left and not node.right and curr_sum + node.val == targetSum:
-                curr_path.append(node.val)
-                self.res.append(curr_path.copy())
-                curr_path.pop()
-                return 
-
+            curr_sum += node.val
             curr_path.append(node.val)
-            dfs(node.left, curr_sum + node.val, curr_path)
-            dfs(node.right, curr_sum + node.val, curr_path)
+
+            if not node.left and not node.right and curr_sum == targetSum:
+                self.res.append(curr_path.copy())
+
+            dfs(node.left, curr_sum, curr_path)
+            dfs(node.right, curr_sum, curr_path)
             curr_path.pop()
 
             return
