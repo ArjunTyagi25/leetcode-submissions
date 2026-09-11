@@ -10,11 +10,10 @@ class Solution:
 
             if text1[index_1] == text2[index_2]:
                 res = 1 + rec(index_1 + 1, index_2 + 1)
-                memo[(index_1, index_2)] = res
-                return res
             else:
-                res = max(rec(index_1 + 1, index_2), rec(index_1, index_2 + 1), rec(index_1 + 1, index_2 + 1))
-                memo[(index_1, index_2)] = res
-                return res
+                res = max(rec(index_1 + 1, index_2), rec(index_1, index_2 + 1))
+            
+            memo[(index_1, index_2)] = res
+            return res
 
         return rec(0, 0)
