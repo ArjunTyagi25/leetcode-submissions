@@ -6,24 +6,23 @@
 #         self.right = right
 class Solution:
     def smallestFromLeaf(self, root: Optional[TreeNode]) -> str:
-        self.strings = [] 
+        self.min_string = chr(97+26)
+
         def dfs(node, curr_str):
             if not node:
                 return
 
-            curr_str += chr(node.val + 97)
+            curr_str = chr(node.val + 97) + curr_str
             if not node.left and not node.right:
-                self.strings.append(curr_str[::-1])
-                curr_str = curr_str[:-1]
-                return
+                if curr_str < self.min_string:
+                    self.min_string = curr_str
+                    return
 
             dfs(node.left, curr_str)
             dfs(node.right, curr_str)
-            curr_str = curr_str[:-1]
-            return
 
         dfs(root, "")
-        return sorted(self.strings)[0]
+        return self.min_string
 
 
         
