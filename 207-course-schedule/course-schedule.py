@@ -1,7 +1,8 @@
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        adj_list = { i : [] for i in range(numCourses)}
+    def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
+        adj_list = {i : [] for i in range(numCourses)}
         inDegree = [0] * numCourses
+
         for a, b in prerequisites:
             adj_list[b].append(a)
             inDegree[a] += 1
@@ -14,15 +15,20 @@ class Solution:
                 visited.add(i)
 
         while q:
-            course = q.popleft()
-            
-            for nextCourse in adj_list[course]:
-                if nextCourse not in visited:
-                    inDegree[nextCourse] -= 1
-                    if inDegree[nextCourse] == 0:
-                        q.append(nextCourse)
-                        visited.add(nextCourse)
+            curr_course = q.popleft()
+
+            for next_course in adj_list[curr_course]:
+                if next_course not in visited:
+                    inDegree[next_course] -= 1
+                    if inDegree[next_course] == 0:
+                        q.append(next_course)
+                        visited.add(next_course)
+                else:
+                    return False
 
         if len(visited) == numCourses:
             return True
         return False
+
+        
+        
