@@ -23,8 +23,6 @@ class Solution:
                     if inDegree[next_course] == 0:
                         q.append(next_course)
                         visited.add(next_course)
-                else:
-                    return False
 
         if len(visited) == numCourses:
             return True
