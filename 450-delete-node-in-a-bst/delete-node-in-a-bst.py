@@ -9,27 +9,25 @@ class Solution:
         if not root:
             return None
 
-        if key < root.val:
-            root.left = self.deleteNode(root.left, key)
-        elif key > root.val:
+        if root.val < key:
             root.right = self.deleteNode(root.right, key)
+        elif root.val > key:
+            root.left = self.deleteNode(root.left, key)
         else:
-            if not root.left and not root.right:
-                return None
-            elif root.left and not root.right:
-                return root.left
-            elif not root.left and root.right:
+            if not root.left:
                 return root.right
-            else:
-                curr = root.right
-                while curr.left:
-                    curr = curr.left
+            
+            if not root.right:
+                return root.left
 
-                root.val = curr.val
-                root.right = self.deleteNode(root.right, curr.val)
+            # Node has both left and right child
+            curr = root.left
+            while curr.right:
+                curr = curr.right
 
-                return root
+            root.val = curr.val
 
+            root.left = self.deleteNode(root.left, curr.val)
+        
         return root
-
         
