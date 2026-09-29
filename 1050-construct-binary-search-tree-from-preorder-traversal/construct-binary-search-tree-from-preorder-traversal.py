@@ -6,20 +6,22 @@
 #         self.right = right
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> Optional[TreeNode]:
-        self.i = 0
+        root = TreeNode(preorder[0])
+        stack = [root]
 
-        def rec(upper_bound):
-            if self.i == len(preorder):
-                return None
-
-            if preorder[self.i] < upper_bound:
-                node = TreeNode(preorder[self.i])
-                self.i += 1
-                node.left = rec(node.val)
-                node.right = rec(upper_bound)
-                return node
+        for value in preorder[1:]:
+            if value < stack[-1].val:
+                stack[-1].left = TreeNode(value)
+                stack.append(stack[-1].left)
             else:
-                return None
+                while stack and value > stack[-1].val:
+                    last = stack.pop()
+                last.right = TreeNode(value)
+                stack.append(last.right)
 
-        return rec(float('inf'))
+        return root
+
+        
+
+            
         
