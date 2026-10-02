@@ -29,8 +29,7 @@ class LRUCache:
     def get(self, key: int) -> int:
         if key in self.nodes:
             node = self.nodes[key]
-            node.prev.next = node.next
-            node.next.prev = node.prev
+            self.remove(node)
             self.add(node)
             
             return node.val
