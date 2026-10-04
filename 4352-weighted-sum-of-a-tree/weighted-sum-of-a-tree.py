@@ -23,7 +23,6 @@ class Solution:
             depth += 1
             height += 1
 
-        print(height)
         res = 0
         for node, depth in nodes:
             res += nums[node] * (height - depth + 1)
