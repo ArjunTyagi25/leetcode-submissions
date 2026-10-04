@@ -9,22 +9,27 @@ class Solution:
                 adj_list[i].append(childNode)
 
         safeNodes = set()
+        unsafeNodes = set()
         terminalNodes = set()
 
         for i in range(n):
             if adj_list[i] == []:
                 terminalNodes.add(i)
 
-        print(adj_list)
         def dfs(node, curr_path):
             if node in terminalNodes or node in safeNodes:
                 return True
+
+            if node in unsafeNodes or node in curr_path:
+                return False
 
             curr_path.add(node)
             isSafe = True
             for childNode in adj_list[node]:
                 if childNode not in curr_path:
                     if not dfs(childNode, curr_path):
+                        unsafeNodes.add(node)
+                        curr_path.remove(node)
                         return False
                 else:
                     return False
