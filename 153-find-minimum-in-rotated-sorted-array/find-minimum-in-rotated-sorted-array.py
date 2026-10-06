@@ -10,4 +10,4 @@ class Solution:
             else:
                 L = M + 1
 
-        return nums[L]
+        return nums[R]
