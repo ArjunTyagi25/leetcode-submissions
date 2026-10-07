@@ -14,10 +14,19 @@ class TimeMap:
         if key in self.map:
             values = self.map[key]
 
-            for time, value in reversed(values):
-                if time <= timestamp:
-                    return value
-            return ""
+            L, R = 0, len(values) - 1
+            res = ""
+
+            while L<=R:
+                M = (L+R)//2
+
+                if values[M][0] <= timestamp:
+                    res = values[M][1]
+                    L = M + 1
+                else:
+                    R = M - 1
+
+            return res
         else:
             return ""
         
