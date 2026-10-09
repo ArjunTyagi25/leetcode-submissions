@@ -1,41 +1,26 @@
 class Solution:
     def predictTheWinner(self, nums: list[int]) -> bool:
-        numsQueue = deque(nums)
+        memo = {}
+        def rec(L, R, turn):
+            if L > R:
+                return 0
 
-        def rec(player1Score, player2Score, turn):
-            if not numsQueue:
-                if player1Score >= player2Score:
-                    return True
-                else:
-                    return False
+            state = (L, R, turn)
+            if state in memo:
+                return memo[state]
 
-            if turn == "player1":
-                firstNum = numsQueue.popleft()
-                player1Score += firstNum
-                res_1 = rec(player1Score, player2Score, "player2")
-                player1Score -= firstNum
-                numsQueue.appendleft(firstNum)
+            if turn == "add":
+                res_1 = nums[L] + rec(L+1, R, "sub")
+                res_2 = nums[R] + rec(L, R-1, "sub")
 
-                lastNum = numsQueue.pop()
-                player1Score += lastNum
-                res_2 = rec(player1Score, player2Score, "player2")
-                player1Score -= lastNum
-                numsQueue.append(lastNum)
-
-                return res_1 or res_2
+                res = max(res_1, res_2)
             else:
-                firstNum = numsQueue.popleft()
-                player2Score += firstNum
-                res_1 = rec(player1Score, player2Score, "player1")
-                player2Score -= firstNum
-                numsQueue.appendleft(firstNum)
+                res_1 = -nums[L] + rec(L+1, R, "add")
+                res_2 = -nums[R] + rec(L, R-1, "add")
 
-                lastNum = numsQueue.pop()
-                player2Score += lastNum
-                res_2 = rec(player1Score, player2Score, "player1")
-                player2Score -= lastNum
-                numsQueue.append(lastNum)
+                res = min(res_1, res_2)
 
-                return res_1 and res_2
+            memo[state] = res
+            return res
 
-        return rec(0, 0, "player1")
+        return rec(0, len(nums)-1, "add") >= 0
